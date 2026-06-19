@@ -1,2 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+
+
 #include "DeliveryDetails.h"
+
+void FDeliveryDetails::SetDeliveryStatus(EDeliveryStatus NewStatus)
+{
+    DeliveryStatus = NewStatus;
+}

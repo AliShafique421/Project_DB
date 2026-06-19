@@ -10,7 +10,10 @@ UCLASS()
 class DELIVERYBOMB_API ADeliveryDestination : public ADeliveryPoint
 {
 	GENERATED_BODY()
-	
+
+	public:
+		virtual void OnPlayerReached_Implementation(AActor* PlayerActor) override;
+
 	protected:
 		virtual void BeginPlay() override;
 		virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;

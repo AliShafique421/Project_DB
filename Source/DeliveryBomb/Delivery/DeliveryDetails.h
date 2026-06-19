@@ -6,6 +6,16 @@
 #include "DeliveryPoint.h"
 #include "DeliveryDetails.generated.h"
 
+UENUM(BlueprintType)
+enum class EDeliveryStatus : uint8
+{
+	None,
+	Pickup,
+	InProgress,
+	Completed,
+	Failed
+};
+
 USTRUCT(BlueprintType)
 struct FDeliveryDetails
 {
@@ -21,15 +31,10 @@ struct FDeliveryDetails
 	EDeliveryStatus DeliveryStatus = EDeliveryStatus::None;
 
 	public:
-		UFUNCTION(BlueprintCallable, Category = "DeliverySubsystem")
 		void SetDeliveryStatus(EDeliveryStatus NewStatus);
-};
 
-UENUM(BlueprintType)
-enum class EDeliveryStatus
-{
-	None,
-	Pickup,
-	InProgress,
-	Completed
+		UPROPERTY(BlueprintReadOnly, Category = "DeliverySubsystem")
+		float DeliveryTime = 0.0f;
+
+		float BombTimerAdded = 0.0f;
 };

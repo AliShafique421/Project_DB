@@ -49,7 +49,7 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 	void DeactivateDeliveryPoint();
 
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintNativeEvent)
 	void OnPlayerReached(AActor* PlayerActor);
 
 };

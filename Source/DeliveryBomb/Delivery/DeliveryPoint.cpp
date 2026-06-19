@@ -59,3 +59,8 @@ void ADeliveryPoint::HandleOverlap(UPrimitiveComponent* OverlappedComponent, AAc
 	if (OtherActor && OtherActor == playerPawn)
 		OnPlayerReached(OtherActor);
 }
+
+void ADeliveryPoint::OnPlayerReached_Implementation(AActor* PlayerActor)
+{
+	return;
+}

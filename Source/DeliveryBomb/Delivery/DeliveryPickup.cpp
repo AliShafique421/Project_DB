@@ -21,3 +21,11 @@ void ADeliveryPickup::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
     Super::EndPlay(EndPlayReason);
 }
+
+void ADeliveryPickup::OnPlayerReached_Implementation(AActor* PlayerActor)
+{
+    if (!DeliverySubsystem)
+        return;
+
+    DeliverySubsystem->ActiveDeliveryPickedUp();
+}

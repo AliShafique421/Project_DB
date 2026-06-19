@@ -22,3 +22,11 @@ void ADeliveryDestination::EndPlay(const EEndPlayReason::Type EndPlayReason)
     Super::EndPlay(EndPlayReason);
 }
 
+void ADeliveryDestination::OnPlayerReached_Implementation(AActor* PlayerActor)
+{
+    if (!DeliverySubsystem)
+        return;
+
+    DeliverySubsystem->ActiveDeliveryCompleted();
+}
+
