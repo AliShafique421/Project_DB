@@ -32,9 +32,6 @@ class DELIVERYBOMB_API UDeliverySubsystem : public UWorldSubsystem
 		int32 GenerateDeliveries(int32 Count);
 
 		UFUNCTION(BlueprintCallable, Category = "DeliverySubsystem")
-		bool GenerateDelivery(FDeliveryDetails& OutDeliveryDetails);
-
-		UFUNCTION(BlueprintCallable, Category = "DeliverySubsystem")
 		bool SetActiveDelivery(int32 DeliveryIndex);
 		
 		UFUNCTION(BlueprintImplementableEvent, Category = "DeliverySubsystem")
@@ -72,6 +69,9 @@ class DELIVERYBOMB_API UDeliverySubsystem : public UWorldSubsystem
 
 		float DeliveryTimer = 300.0f;
 
+		//Function made private to ensure it isn't exposed to blueprints
+		UFUNCTION(BlueprintCallable, Category = "DeliverySubsystem")
+		bool GenerateDelivery(FDeliveryDetails& OutDeliveryDetails);
 	public:
 		UFUNCTION(BlueprintPure, Category = "DeliverySubsystem")
 		int32 GetPickUpPointCount() const { return PickupPoints.Num(); };
