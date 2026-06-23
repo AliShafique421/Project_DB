@@ -4,6 +4,8 @@
 #include "CoreMinimal.h"
 #include "Subsystems/WorldSubsystem.h"
 #include "Delivery/DeliveryDetails.h"
+#include "Delivery/DeliveryDifficultyStats.h"
+#include "Engine/DataTable.h"
 #include "DeliverySubsystem.generated.h"
 
 UCLASS()
@@ -29,16 +31,16 @@ class DELIVERYBOMB_API UDeliverySubsystem : public UWorldSubsystem
 
 	public:	//Deliveries
 		UFUNCTION(BlueprintCallable, Category = "DeliverySubsystem")
-		int32 GenerateDeliveries(int32 Count);
+		int32 GenerateDeliveries(int32 Count, EDeliveryDifficulty MinimumDifficulty, EDeliveryDifficulty MaximumDifficulty);
 
 		UFUNCTION(BlueprintCallable, Category = "DeliverySubsystem")
-		bool GenerateDelivery(FDeliveryDetails& OutDeliveryDetails);
+		bool GenerateDelivery(FDeliveryDetails& OutDeliveryDetails, EDeliveryDifficulty Difficulty, APawn* PlayerPawn);
 
 		UFUNCTION(BlueprintCallable, Category = "DeliverySubsystem")
 		bool SetActiveDelivery(int32 DeliveryIndex);
 		
 		UFUNCTION(BlueprintImplementableEvent, Category = "DeliverySubsystem")
-		void ReceiveActiveDeliveryRewards(int32 BombTimerAdded);
+		void ReceiveActiveDeliveryRewards();
 
 		UFUNCTION(BlueprintNativeEvent, Category = "DeliverySubsystem")
 		void ActiveDeliveryPickedUp();
@@ -61,6 +63,9 @@ class DELIVERYBOMB_API UDeliverySubsystem : public UWorldSubsystem
 		UPROPERTY(BlueprintReadonly, Category = "DeliverySubsystem")
 		bool bIsDeliveryActive = false;
 
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DeliverySubsystem")
+		UDataTable* DeliveryDifficultyTable;
+
 	private:
 		UPROPERTY()
 		TArray<ADeliveryPoint*> PickupPoints;
@@ -69,8 +74,6 @@ class DELIVERYBOMB_API UDeliverySubsystem : public UWorldSubsystem
 		UPROPERTY()
 		TArray<ADeliveryPoint*> DeliveryPoints;
 		TArray<ADeliveryPoint*> ValidDeliveryPoints;
-
-		float DeliveryTimer = 300.0f;
 
 	public:
 		UFUNCTION(BlueprintPure, Category = "DeliverySubsystem")

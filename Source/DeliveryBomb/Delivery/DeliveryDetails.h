@@ -33,8 +33,12 @@ struct FDeliveryDetails
 	public:
 		void SetDeliveryStatus(EDeliveryStatus NewStatus);
 
-		UPROPERTY(BlueprintReadOnly, Category = "DeliverySubsystem")
-		float DeliveryTime = 0.0f;
+		UPROPERTY(BlueprintReadOnly, Category = "Delivery Details")
+		float TimeAddedOnAccept = 0.0f;
 
-		float BombTimerAdded = 0.0f;
+		UPROPERTY(BlueprintReadOnly, Category = "Delivery Details")
+		float TimeAddedOnDelivered = 0.0f;
+
+		UPROPERTY(BlueprintReadOnly, Category = "Delivery Details")
+		int32 MoneyRewardOnCompletion = 0.0f;
 };
