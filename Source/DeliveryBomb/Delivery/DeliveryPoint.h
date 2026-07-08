@@ -23,6 +23,9 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	bool bIsActive = false;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DeliveryPoint")
+	FString PointName;
+
 protected:
 	virtual void BeginPlay() override;
 

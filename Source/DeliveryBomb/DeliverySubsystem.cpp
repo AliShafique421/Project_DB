@@ -19,22 +19,6 @@ void UDeliverySubsystem::Deinitialize()
     Super::Deinitialize();
 }
 
-void UDeliverySubsystem::RunDeliveryTimer(float DeltaTime)
-{
-    // if (bIsDeliveryActive && (ActiveDelivery.DeliveryStatus == EDeliveryStatus::Pickup || ActiveDelivery.DeliveryStatus == EDeliveryStatus::InProgress))
-    // {
-    //     ActiveDelivery.DeliveryTime -= DeltaTime;
-
-    //     if (ActiveDelivery.DeliveryTime <= 0.0f)
-    //     {
-    //         ActiveDelivery.SetDeliveryStatus(EDeliveryStatus::Failed);
-    //         ActiveDelivery.DeliveryTime = 0.0f;
-
-    //         ActiveDeliveryFailed();
-    //     }
-    // }
-}
-
 void UDeliverySubsystem::RegisterPickUpPoint(ADeliveryPoint* PickupPoint)
 {
     if (PickupPoint)
@@ -93,8 +77,13 @@ int32 UDeliverySubsystem::GenerateDeliveries(int32 Count, EDeliveryDifficulty Mi
         }
     }
 
+    if (GeneratedCount > 0)
+        OnDeliveriesGenerated.Broadcast();
+
     return GeneratedCount;
 }
+
+//orders can share the same pickup points but cant have the same drop off points
 
 bool UDeliverySubsystem::GenerateDelivery(FDeliveryDetails& OutDeliveryDetails, EDeliveryDifficulty Difficulty, APawn* PlayerPawn)
 {
@@ -180,7 +169,7 @@ bool UDeliverySubsystem::GenerateDelivery(FDeliveryDetails& OutDeliveryDetails, 
     OutDeliveryDetails.TimeAddedOnDelivered = DeliveryTime;
     OutDeliveryDetails.MoneyRewardOnCompletion = 300;
 
-    ValidPickupPoints.Remove(SelectedPickUpPoint);
+    // ValidPickupPoints.Remove(SelectedPickUpPoint);
     ValidDeliveryPoints.Remove(SelectedDeliveryPoint);
 
     return true;
@@ -193,6 +182,8 @@ bool UDeliverySubsystem::SetActiveDelivery(int32 DeliveryIndex)
         ActiveDelivery.SetDeliveryStatus(EDeliveryStatus::Pickup);
 
         bIsDeliveryActive = true;
+
+        OnDeliveryStarted.Broadcast();
         return true;
     }
 

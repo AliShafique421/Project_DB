@@ -14,6 +14,15 @@ class DELIVERYBOMB_API UDeliverySubsystem : public UWorldSubsystem
 	GENERATED_BODY()
 
 	public:	//Subsystem
+		DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeliveriesGenerated);
+		DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeliveryStarted);
+
+		UPROPERTY(BlueprintAssignable, Category = "DeliverySubsystem")
+		FOnDeliveriesGenerated OnDeliveriesGenerated;
+
+		UPROPERTY(BlueprintAssignable, Category = "DeliverySubsystem")
+		FOnDeliveryStarted OnDeliveryStarted;
+
 		virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 		virtual void Deinitialize() override;
 		
@@ -50,9 +59,6 @@ class DELIVERYBOMB_API UDeliverySubsystem : public UWorldSubsystem
 
 		UFUNCTION(BlueprintNativeEvent, Category = "DeliverySubsystem")
 		void ActiveDeliveryFailed();
-
-		UFUNCTION(BlueprintCallable, Category = "DeliverySubsystem")
-		void RunDeliveryTimer(float DeltaTime);
 
 		UPROPERTY(BlueprintReadOnly, Category = "DeliverySubsystem")
 		TArray<FDeliveryDetails> GeneratedDeliveries;
